@@ -1,0 +1,50 @@
+server:
+  port: ${APP_PORT:8102}
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: ms-solicitude
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 12345678
+    continue-on-error: true
+    initialization-mode: always
+    hikari:
+      connection-timeout: ${GCP_DATABASE_CONNECTION_TIMEOUT:20000}
+      maximum-idle: ${GCP_DATABASE_MAXIMUM_IDLE:2}
+      minimum-idle: ${GCP_DATABASE_MINIMUM_IDLE:1}
+      maximum-pool-size: ${GCP_DATABASE_MAXIMUM_POOL_SIZE:10}
+      idle-timeout: ${GCP_DATABASE_IDLE_TIMEOUT:10000}
+      max-lifetime: ${GCP_DATABASE_MAX_LIFETIME:180000}
+      data-source-properties:
+        stringtype: unspecified
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${GCP_DATABASE_SCHEMA}
+        jdbc:
+          batch_size: 5000
+        order_inserts: true
+
+  jackson:
+    default-property-inclusion: non_null
+
+info:
+  project:
+    title: 'Solicitude API'
+    description: 'APIs associated to Solicitude'
+    code: 'solicitude'
+    version: 1.0.0
+
+management:
+  endpoints:
+    web:
+      base-path: '/actuator'
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: '/swagger/swagger2.json'
